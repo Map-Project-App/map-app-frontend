@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 
+import Header from '../components/Header';
 import { Config } from '../utils/Config';
 
 type IMainProps = {
@@ -10,6 +11,8 @@ type IMainProps = {
 const Main = (props: IMainProps) => (
   <div className="antialiased w-full text-gray-700">
     {props.meta}
+
+    <Header buttons={['Discover', 'Search', 'About']} />
 
     <div className="max-w-screen-md mx-auto">
       <div className="border-b border-gray-300">
