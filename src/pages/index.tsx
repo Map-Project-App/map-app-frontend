@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Link from 'next/link';
+
 import { Meta } from '../layout/Meta';
 import { Main } from '../templates/Main';
 
@@ -34,6 +36,11 @@ const Index = () => (
         <span>
           <a>Sign in</a>
         </span>
+      </p>
+      <p className="text-center text-sm">
+        <Link href="/map">
+          <a>DEV SKIP TO MAP</a>
+        </Link>
       </p>
     </div>
   </Main>
