@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { LatLngTuple } from 'leaflet';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
+import Form from '../../components/Form';
 import { Meta } from '../../layout/Meta';
 import { Main } from '../../templates/Main';
 
@@ -15,27 +16,44 @@ const MapNoSSR = dynamic(() => import('../../components/Map'), {
   ssr: false,
 });
 
-const campus: LatLngTuple = [40.0067, -83.0305];
+const MapPage = () => {
+  const [center, setCenter] = useState<LatLngTuple>([40.0067, -83.0305]);
+  const [marker, setMarker] = useState<LatLngTuple>([40.0067, -83.0305]);
 
-const MapPage = () => (
-  <>
-    <Head>
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossOrigin=""
-      />
-      <script
-        src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossOrigin=""
-      />
-    </Head>
-    <Main meta={<Meta title="Map" description="map page" />}>
-      <MapNoSSR center={campus} zoom={14} />
-    </Main>
-  </>
-);
+  const handleClick = (e: { latlng: React.SetStateAction<LatLngTuple> }) => {
+    setMarker(e.latlng);
+    alert(e.latlng);
+  };
+
+  const handleLocationSearch = (location: string) => {
+    const latlng = location.split(', ');
+    setCenter([parseFloat(latlng[0]), parseFloat(latlng[1])]);
+  };
+
+  return (
+    <>
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossOrigin=""
+        />
+        <script
+          src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+          crossOrigin=""
+        />
+      </Head>
+      <Main meta={<Meta title="Map" description="map page" />}>
+        <Form
+          placeholder="Enter a location (city, state, lat/long...)"
+          onSubmit={handleLocationSearch}
+        />
+        <MapNoSSR center={center} zoom={14} marker={marker} onClick={handleClick} />
+      </Main>
+    </>
+  );
+};
 
 export default MapPage;
