@@ -14,7 +14,7 @@ const Form = ({ placeholder, defaultText, onSubmit }: IFormProps) => {
   };
 
   return (
-    <form className="w-full max-w-sm">
+    <form className="w-full">
       <div className="flex items-center border-b border-blue-500 py-2 space-x-4">
         <input
           className="appearance-none bg-transparent border w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"

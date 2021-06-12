@@ -18,16 +18,23 @@ const MapNoSSR = dynamic(() => import('../../components/Map'), {
 
 const MapPage = () => {
   const [center, setCenter] = useState<LatLngTuple>([40.0067, -83.0305]);
-  const [marker, setMarker] = useState<LatLngTuple>([40.0067, -83.0305]);
-
-  const handleClick = (e: { latlng: React.SetStateAction<LatLngTuple> }) => {
-    setMarker(e.latlng);
-    alert(e.latlng);
-  };
+  const [marker] = useState<LatLngTuple>([40.0067, -83.0305]);
+  const [zoom] = useState<number>(14);
 
   const handleLocationSearch = (location: string) => {
-    const latlng = location.split(', ');
-    setCenter([parseFloat(latlng[0]), parseFloat(latlng[1])]);
+    const encodedLocation = encodeURIComponent(location.trim());
+    fetch(
+      `https://us1.locationiq.com/v1/search.php?key=${process.env.NEXT_PUBLIC_GEOCODING_KEY}&q=${encodedLocation}&format=json`,
+    )
+      .then((result) => result.json())
+      .then(
+        (result) => {
+          setCenter([result[0].lat, result[0].lon]);
+        },
+        (error) => {
+          alert(error);
+        },
+      );
   };
 
   return (
@@ -47,10 +54,10 @@ const MapPage = () => {
       </Head>
       <Main meta={<Meta title="Map" description="map page" />}>
         <Form
-          placeholder="Enter a location (city, state, lat/long...)"
+          placeholder="Enter a location (country, city, state, ZIP code...)"
           onSubmit={handleLocationSearch}
         />
-        <MapNoSSR center={center} zoom={14} marker={marker} onClick={handleClick} />
+        <MapNoSSR center={center} zoom={zoom} marker={marker} />
       </Main>
     </>
   );
