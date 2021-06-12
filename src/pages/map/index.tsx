@@ -18,7 +18,7 @@ const MapNoSSR = dynamic(() => import('../../components/Map'), {
 
 const MapPage = () => {
   const [center, setCenter] = useState<LatLngTuple>([40.0067, -83.0305]);
-  const [marker] = useState<LatLngTuple>([40.0067, -83.0305]);
+  const [marker, setMarker] = useState<LatLngTuple>([40.0067, -83.0305]);
   const [zoom] = useState<number>(14);
 
   const handleLocationSearch = (location: string) => {
@@ -57,7 +57,7 @@ const MapPage = () => {
           placeholder="Enter a location (country, city, state, ZIP code...)"
           onSubmit={handleLocationSearch}
         />
-        <MapNoSSR center={center} zoom={zoom} marker={marker} />
+        <MapNoSSR center={center} zoom={zoom} marker={marker} onClick={setMarker} />
       </Main>
     </>
   );
