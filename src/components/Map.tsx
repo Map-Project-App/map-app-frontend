@@ -33,7 +33,14 @@ const Map = ({
     >
       <MapEvents />
       <Marker position={marker}>
-        <Popup>Upload an image to this location!</Popup>
+        <Popup>
+          <button
+            className="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-md border-4 text-white py-1 px-4 rounded"
+            type="button"
+          >
+            Upload here!
+          </button>
+        </Popup>
       </Marker>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

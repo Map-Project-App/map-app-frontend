@@ -16,6 +16,7 @@
     "@types/react-leaflet": "^2.8.1",
     "leaflet": "^1.7.1",
     "next": "^10.2.3",
+    "next-auth": "^3.26.1",
     "next-seo": "^4.24.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
